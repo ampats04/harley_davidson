@@ -38,7 +38,7 @@ MOTORCYCLES = [
 
 @app.route("/")
 def index():
-    return render_template("home.html", motorcycles=MOTORCYCLES, company_name=company)
+    return render_template("index.html", motorcycles=MOTORCYCLES, company_name=company)
 
 
 # Return JSON
