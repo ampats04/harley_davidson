@@ -11,13 +11,23 @@
             {% include 'nav.html'%}
            
             <div class = "container">
-                <h1 class = "text-center"> {{company_name}}</h1>
-                <img class = "img-fluid" src = "static\cover.jpg" width = "100%" height = 600em>          
-                <p class = "text-center lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Pellentesque habitant morbi tristique senectus et netus et malesuada. Dictumst quisque sagittis purus sit amet volutpat. Sed lectus vestibulum mattis 
-                    ullamcorper velit sed ullamcorper. Elit eget gravida cum sociis natoque penatibus et. Lacus vestibulum sed arcu non. Arcu felis bibendum ut tristique et
-                    egestas. Nunc lobortis mattis aliquam faucibus purus in. At tellus at urna condimentum mattis. Pellentesque eu tincidunt tortor aliquam nulla facilisi. 
-                     Fringilla phasellus faucibus scelerisque eleifend donec. Orci dapibus ultrices in iaculis nunc sed augue lacus.</p>
+               
+                <img class = "img-fluid" src = "static\cover.jpg" width = "100%" height = "600em">          
+                
+                <div class = "row">
+                    <div class = "col-6">
+                        <p class = " lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Pellentesque habitant morbi tristique senectus et netus et malesuada. Dictumst quisque sagittis purus sit amet volutpat. Sed lectus vestibulum mattis 
+                            ullamcorper velit sed ullamcorper. Elit eget gravida cum sociis natoque penatibus et. Lacus vestibulum sed arcu non. Arcu felis bibendum ut tristique et
+                            egestas. Nunc lobortis mattis aliquam faucibus purus in. At tellus at urna condimentum mattis. Pellentesque eu tincidunt tortor aliquam nulla facilisi. 
+                             Fringilla phasellus faucibus scelerisque eleifend donec. Orci dapibus ultrices in iaculis nunc sed augue lacus.</p>
+                    </div>
+                    <div class ="col-6">
+                        <img src = "static\side.jpg" height="320">
+                    </div>
+                    
+                </div>
+                
 
                 <div>
                     <h1 class = 'text-center mb-4 mt-4'><b>Available Motorcycles</b></h1>
@@ -30,13 +40,9 @@
                     
                     {% endfor %}
                 </div>
-              
-                
-
-                
 
             </div>
-          
+            {% include 'footer.html' %}
             
         </body>
     </head>
