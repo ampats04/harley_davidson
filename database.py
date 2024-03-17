@@ -9,7 +9,7 @@ db_connection = "mysql+pymysql"
 db_user = "root"
 db_pass = ""
 db_host = "localhost"
-db_name = "BIBO_DB"
+db_name = "harley_davidson"
 
 
 # added SSL Connection
@@ -24,14 +24,20 @@ engine = create_engine(
     },
 )
 
-# connect to database
 
-with engine.connect() as conn:
+#  Query to get all the data from database
+def load_motorcycles_from_db():
 
-    result = conn.execute(text("SELECT * FROM motorcycles"))
+    # Use the SQLAlchemy engine to connect to the database
+    with engine.connect() as conn:
+        result = conn.execute(text("SELECT * FROM motorcycles"))
 
-    result_all = result.all()
-    first_result = result_all[0]
+        motorcycle = []
 
-    print("Result_All: ", result_all)
-    # print("First Result: ", first_result)
+        # fetch  one by one and append it in a list
+        for row in result:
+            # Convert the row to a dictionary using row._mapping
+            motorcycle_dict = dict(row._mapping)
+            motorcycle.append(dict(motorcycle_dict))
+
+        return motorcycle

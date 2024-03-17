@@ -1,10 +1,12 @@
 <div class = ' container border-bottom row mb-2'>
     
-    <h4>{{motorcycle['model']}}</h4>
-    <div>Year: {{motorcycle['year']}}</div>
-    <div>Displacement: {{motorcycle['displacement']}}</div>
-    <div class = 'mb-2'>Price: {{motorcycle['price']}}</div>
-    <div class = col-3>
+    <div class = "col-md-6"><h4>{{motorcycle['model']}}</h4>
+        <div>Year: {{motorcycle['year']}}</div>
+        <div>Displacement: {{motorcycle['displacement']}}</div>
+        <div>Description: {{motorcycle['description']}}</div>
+        <div class = 'mb-2'>Price: {{motorcycle['price']}}</div></div>
+    
+    <div class = "col-md-6 align-content-end">
         <button type = 'button' class= 'btn btn-outline-primary mb-2'>View</button>
     </div>
 </div>

@@ -1,50 +1,35 @@
+import json
 from flask import Flask, render_template, jsonify
+from database import load_motorcycles_from_db
+from flask_marshmallow import Marshmallow
 
+# assign the Flask app to a variable called 'app
 app = Flask(__name__)
+
+# assign marshmallow to a variable and bind it with the app
+
+ma = Marshmallow(app)
 
 company = "Harley Davidson"
 
-MOTORCYCLES = [
-    {
-        "id": 1,
-        "model": "Street Bob 114",
-        "year": 2024,
-        "displacement": "1868 cc",
-        "price": 500000,
-    },
-    {
-        "id": 2,
-        "model": "Soft tail",
-        "year": 2024,
-        "displacement": "1868 cc",
-        "price": 500000,
-    },
-    {
-        "id": 3,
-        "model": "Low Rider",
-        "year": 2024,
-        "displacement": "1868 cc",
-        "price": 500000,
-    },
-    {
-        "id": 4,
-        "model": "Sport Glide",
-        "year": 2024,
-        "displacement": "1868 cc",
-        "price": 500000,
-    },
-]
 
-
+# Initial Route
 @app.route("/")
 def index():
-    return render_template("index.html", motorcycles=MOTORCYCLES, company_name=company)
+
+    motorcycles = load_motorcycles_from_db()
+
+    return render_template("index.html", motorcycles=motorcycles, company_name=company)
 
 
 # Return JSON
 @app.route("/motorcycles")
 def available_motorcycles():
-    return jsonify(MOTORCYCLES)
+
+    motorcycles = load_motorcycles_from_db()
+    serialized_data = json.dumps(motorcycles)
+
+    return jsonify(serialized_data)
 
 
 if __name__ == "__main__":
