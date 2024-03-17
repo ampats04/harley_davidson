@@ -8,7 +8,7 @@ print(sqlalchemy.__version__ + pymysql.__version__)
 db_connection = "mysql+pymysql"
 db_user = "root"
 db_pass = ""
-db_host = "localhost"
+db_host = "localhost:3306"
 db_name = "harley_davidson"
 
 
