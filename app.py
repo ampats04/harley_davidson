@@ -1,14 +1,14 @@
 import json
 from flask import Flask, render_template, jsonify
 from database import load_motorcycles_from_db
-from flask_marshmallow import Marshmallow
+
 
 # assign the Flask app to a variable called 'app
 app = Flask(__name__)
 
 # assign marshmallow to a variable and bind it with the app
 
-ma = Marshmallow(app)
+
 
 company = "Harley Davidson"
 
@@ -27,9 +27,8 @@ def index():
 def available_motorcycles():
 
     motorcycles = load_motorcycles_from_db()
-    serialized_data = json.dumps(motorcycles)
 
-    return jsonify(serialized_data)
+    return jsonify(motorcycles)
 
 
 if __name__ == "__main__":
