@@ -30,7 +30,8 @@ def load_motorcycles_from_db():
 
     # Use the SQLAlchemy engine to connect to the database
     with engine.connect() as conn:
-        result = conn.execute(text("SELECT * FROM motorcycles"))
+        query = text("SELECT * FROM motorcycles")
+        result = conn.execute(query)
 
         motorcycle = []
 
@@ -41,3 +42,21 @@ def load_motorcycles_from_db():
             motorcycle.append(dict(motorcycle_dict))
 
         return motorcycle
+
+
+def load_motorcycle_from_db(id):
+
+    with engine.connect() as conn:
+
+        query = text("SELECT * FROM motorcycles WHERE id = :id_param")
+
+        result = conn.execute(query, dict(id_param=id))
+
+        rows = result.fetchone()
+
+        if len(rows) == 0:
+            return None
+        else:
+
+            mc_dict = dict(rows._mapping)
+            return dict(mc_dict)
