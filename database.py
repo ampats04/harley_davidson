@@ -59,4 +59,4 @@ def load_motorcycle_from_db(id):
         else:
 
             mc_dict = dict(rows._mapping)
-            return dict(mc_dict)
+            return mc_dict
