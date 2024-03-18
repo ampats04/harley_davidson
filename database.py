@@ -54,9 +54,6 @@ def load_motorcycle_from_db(id):
 
         rows = result.fetchone()
 
-        if len(rows) == 0:
-            return None
-        else:
+        output = None if len(rows) == 0 else dict(rows._mapping)
 
-            mc_dict = dict(rows._mapping)
-            return mc_dict
+        return output
