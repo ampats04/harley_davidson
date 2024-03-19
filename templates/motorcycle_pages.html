@@ -2,10 +2,16 @@
 <html>
     <head>
         <title>{{motorcycle.model}}</title>
-        
+       
         {% include 'bootstrap.html' %}
     </head>
         <body>
+
+            {% for lines in motorcycle.description.split("/n" )%}
+                <ul>
+                    <li><h1>{{lines}}</h1></li>
+                </ul>
+            {% endfor %}
 
         </body>
 </html>
