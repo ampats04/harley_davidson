@@ -30,10 +30,10 @@ def load_motorcycles_from_db():
 
     # Use the SQLAlchemy engine to connect to the database
     with engine.connect() as conn:
+        motorcycle = []
+
         query = text("SELECT * FROM motorcycles")
         result = conn.execute(query)
-
-        motorcycle = []
 
         # fetch  one by one and append it in a list
         for row in result:

@@ -27,7 +27,7 @@ def show_mc(id):
 
     mc = load_motorcycle_from_db(id)
 
-    return jsonify(mc)
+    return render_template("motorcycle_pages.html", motorcycle=mc)
 
 
 # Return JSON
