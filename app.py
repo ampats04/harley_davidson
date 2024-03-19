@@ -1,6 +1,10 @@
-import json
 from flask import Flask, render_template, jsonify, request
-from database import load_motorcycles_from_db, load_motorcycle_from_db
+from database import (
+    load_motorcycles_from_db,
+    load_motorcycle_from_db,
+    upload_info_to_db,
+    select_user_info,
+)
 
 
 # assign the Flask app to a variable called 'app
@@ -42,16 +46,21 @@ def available_motorcycles():
 @app.route("/motorcycle/<id>/buy", methods=["GET", "POST"])
 def buy_mc(id):
 
-    try:
-        # use {{args}} when getting data while use form when you want the data to be in the URL
-        data = request.form
+    # use {{args}} when getting data while use form when you want the data to be in the URL
+    data = request.form
+    motorcycle = load_motorcycle_from_db(id)
 
-        print("sayup", data)
+    upload_info_to_db(id, data)
 
-        return jsonify(data)
+    return render_template("submitted.html", buy=data, motorcycle=motorcycle)
 
-    except Exception as e:
-        print("hello", e)
+
+@app.route("/user")
+def all_user():
+
+    all_us = select_user_info()
+
+    return jsonify(all_us)
 
 
 if __name__ == "__main__":

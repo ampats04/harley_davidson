@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Thanks for purchasing {{motorcycle.model}}
+        </title>
+        {% include 'bootstrap.html' %}
+    </head>
+    <body>
+        <label>User ID</label>
+        <h4>{{buy.userId}}</h4>
+        
+        <label>Full Name</label>
+        <h4>{{buy.full_name}}</h4>
+        
+        <label>Email</label>
+        <h4>{{buy.email}}</h4>
+    </body>
+</html>

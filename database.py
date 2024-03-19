@@ -57,3 +57,40 @@ def load_motorcycle_from_db(id):
         output = None if len(rows) == 0 else dict(rows._mapping)
 
         return output
+
+
+def upload_info_to_db(user_id, data):
+
+    with engine.connect() as conn:
+
+        query = text(
+            "INSERT INTO user(userId, full_name,email) VALUES (:uid, :full_name, :email)"
+        )
+
+        result = conn.execute(
+            query,
+            parameters=dict(
+                uid=int(user_id), full_name=data["full_name"], email=data["email"]
+            ),
+        )
+
+        conn.commit()
+        print("email", data["email"])
+        print("user_ID", user_id)
+        print("full_name", data["full_name"])
+
+
+def select_user_info():
+
+    with engine.connect() as conn:
+
+        query = text("SELECT * FROM user")
+
+        user = []
+        result = conn.execute(query)
+
+        for row in result:
+
+            user.append(dict(row._mapping))
+
+        return user
