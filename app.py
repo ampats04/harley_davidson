@@ -1,5 +1,5 @@
 import json
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from database import load_motorcycles_from_db, load_motorcycle_from_db
 
 
@@ -22,7 +22,7 @@ def index():
 
 
 # GET motorcycle
-@app.route("/motorcycle/<id>", methods=["GET"])
+@app.route("/motorcycle/<id>")
 def show_mc(id):
 
     mc = load_motorcycle_from_db(id)
@@ -37,6 +37,21 @@ def available_motorcycles():
     motorcycles = load_motorcycles_from_db()
 
     return jsonify(motorcycles)
+
+
+@app.route("/motorcycle/<id>/buy", methods=["GET", "POST"])
+def buy_mc(id):
+
+    try:
+        # use {{args}} when getting data while use form when you want the data to be in the URL
+        data = request.form
+
+        print("sayup", data)
+
+        return jsonify(data)
+
+    except Exception as e:
+        print("hello", e)
 
 
 if __name__ == "__main__":
