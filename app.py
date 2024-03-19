@@ -4,6 +4,7 @@ from database import (
     load_motorcycle_from_db,
     upload_info_to_db,
     select_user_info,
+    select_one_user,
 )
 
 
@@ -65,3 +66,13 @@ def all_user():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
+
+
+@app.route("/user/<userId>")
+def one_user(id):
+
+    print("test")
+    one_us = select_one_user(id)
+
+    print(one_us)
+    return jsonify(one_us)

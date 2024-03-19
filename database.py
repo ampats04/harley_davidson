@@ -94,3 +94,18 @@ def select_user_info():
             user.append(dict(row._mapping))
 
         return user
+
+
+def select_one_user(id):
+
+    with engine.connect() as conn:
+
+        query = text("SELECT * FROM user WHERE userId = :userId_params")
+
+        result = conn.execute(query, dict(userId_params=id))
+
+        rows = result.fetchone()
+
+        output = None if len(rows) == 0 else dict(rows._mapping)
+
+        return output
