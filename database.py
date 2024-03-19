@@ -101,8 +101,9 @@ def select_one_user(id):
     with engine.connect() as conn:
 
         query = text("SELECT * FROM user WHERE userId = :userId_params")
+        dict_user = dict(userId_params=id)
 
-        result = conn.execute(query, dict(userId_params=id))
+        result = conn.execute(query, dict_user)
 
         rows = result.fetchone()
 

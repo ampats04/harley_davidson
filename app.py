@@ -64,11 +64,7 @@ def all_user():
     return jsonify(all_us)
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
-
-
-@app.route("/user/<userId>")
+@app.route("/user/<id>")
 def one_user(id):
 
     print("test")
@@ -76,3 +72,7 @@ def one_user(id):
 
     print(one_us)
     return jsonify(one_us)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
