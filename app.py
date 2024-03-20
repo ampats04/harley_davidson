@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, make_response, session
 from database import (
     load_motorcycles_from_db,
     load_motorcycle_from_db,
@@ -6,15 +6,16 @@ from database import (
     select_user_info,
     select_one_user,
 )
+import jwt
+from datetime import datetime, timedelta
+from functools import wraps
 
 
 # assign the Flask app to a variable called 'app
 app = Flask(__name__)
 
-# assign marshmallow to a variable and bind it with the app
-
-
 company = "Harley Davidson"
+app.config["SECRET_KEY"] = "82c82be9f515444a99764d7e2b84e893"
 
 
 # Initial Route
@@ -23,7 +24,15 @@ def index():
 
     motorcycles = load_motorcycles_from_db()
 
-    return render_template("index.html", motorcycles=motorcycles, company_name=company)
+    output = (
+        render_template("login.html", login="Login Page")
+        if not session.get("logged_in")
+        else render_template(
+            "index.html", motorcycles=motorcycles, company_name=company
+        )
+    )
+
+    return output
 
 
 # GET motorcycle
@@ -44,6 +53,7 @@ def available_motorcycles():
     return jsonify(motorcycles)
 
 
+# GET & POST BUY
 @app.route("/motorcycle/<id>/buy", methods=["GET", "POST"])
 def buy_mc(id):
 
@@ -56,6 +66,7 @@ def buy_mc(id):
     return render_template("submitted.html", buy=data, motorcycle=motorcycle)
 
 
+# GET ALL USERS
 @app.route("/user")
 def all_user():
 
@@ -64,6 +75,7 @@ def all_user():
     return jsonify(all_us)
 
 
+# GET SINGLE USER
 @app.route("/user/<id>")
 def one_user(id):
 

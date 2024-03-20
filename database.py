@@ -1,10 +1,6 @@
 from sqlalchemy import create_engine, text
 import pymysql, sqlalchemy
 
-# check version
-print(sqlalchemy.__version__ + pymysql.__version__)
-
-
 db_connection = "mysql+pymysql"
 db_user = "root"
 db_pass = ""
@@ -39,7 +35,8 @@ def load_motorcycles_from_db():
         for row in result:
             # Convert the row to a dictionary using row._mapping
             motorcycle_dict = dict(row._mapping)
-            motorcycle.append(dict(motorcycle_dict))
+
+            motorcycle.append(motorcycle_dict)
 
         return motorcycle
 
