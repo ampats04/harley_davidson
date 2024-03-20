@@ -6,9 +6,6 @@ from database import (
     select_user_info,
     select_one_user,
 )
-import jwt
-from datetime import datetime, timedelta
-from functools import wraps
 
 
 # assign the Flask app to a variable called 'app

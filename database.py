@@ -72,9 +72,6 @@ def upload_info_to_db(user_id, data):
         )
 
         conn.commit()
-        print("email", data["email"])
-        print("user_ID", user_id)
-        print("full_name", data["full_name"])
 
 
 def select_user_info():

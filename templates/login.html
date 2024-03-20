@@ -6,8 +6,11 @@
             {%include 'bootstrap.html' %}
     </head>
     <body>
-        <h4>Username</h4>
-        <h4>Password</h4>
+       <form action = "/login" method = "post">
+       <input type = "username"  name="username" placeholder="Username"/> 
+       <input type = "password"  name="password" placeholder="Password"/> 
+       <input type = "submit" value = "login">
+    </form>
     </body>
 </html>
 
