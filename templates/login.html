@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{login}}</title>
+        <title>login</title>
 
             {%include 'bootstrap.html' %}
     </head>
     <body>
        <form action = "/login" method = "post">
-       <input type = "username"  name="username" placeholder="Username"/> 
-       <input type = "password"  name="password" placeholder="Password"/> 
-       <input type = "submit" value = "login">
-    </form>
+        {% if error %}
+            <h1>{{error}}haha</h1>
+        {% endif %}
+        <label for ="username">Username: </label>
+        <input type = "username" name = "username" placeholder="Username">
+        <label for = "password">Password:</label>
+        <input type = "password" name = "password" placeholder="Password">
+        <input type = "submit" value = "login">
+       </form>
     </body>
 </html>
 

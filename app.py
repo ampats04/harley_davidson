@@ -1,10 +1,20 @@
-from flask import Flask, render_template, jsonify, request, make_response, session
+from flask import (
+    Flask,
+    redirect,
+    render_template,
+    jsonify,
+    request,
+    make_response,
+    session,
+    url_for,
+)
 from database import (
     load_motorcycles_from_db,
     load_motorcycle_from_db,
     upload_info_to_db,
     select_user_info,
     select_one_user,
+    login_user,
 )
 
 
@@ -12,7 +22,9 @@ from database import (
 app = Flask(__name__)
 
 company = "Harley Davidson"
-app.config["SECRET_KEY"] = "82c82be9f515444a99764d7e2b84e893"
+app.config["SECRET_KEY"] = "5f9ed28397dc4c53900826d292b53c65"
+
+# function decorator
 
 
 # Initial Route
@@ -21,15 +33,32 @@ def index():
 
     motorcycles = load_motorcycles_from_db()
 
-    output = (
-        render_template("login.html", login="Login Page")
-        if not session.get("logged_in")
-        else render_template(
-            "index.html", motorcycles=motorcycles, company_name=company
+    if "username" in session:
+        return render_template(
+            "index.html",
+            motorcycles=motorcycles,
+            company_name=company,
+            username=session["username"],
         )
-    )
 
-    return output
+    else:
+        return render_template("index.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    print("data ni ha")
+
+    if request.method == "POST":
+        data = request.form
+        if login_user(data):
+            return redirect(url_for("index"))
+        else:
+            error = "Invalid username or password"
+            return render_template("login.html", error=error)
+
+    return render_template("login.html")
 
 
 # GET motorcycle

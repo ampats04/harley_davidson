@@ -7,11 +7,17 @@
     </head>
 
     <body>
+        {% if username %}
+
         {% include 'nav.html'%}
        
         {% include 'home.html' %}
        
         {% include 'footer.html' %}
+
+        {% else %}
+        <h2>You are not logged in, please login <a href ="/login">login</a></h2>
+        {% endif %}
         
     </body>
 </html>

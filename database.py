@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, text
-import pymysql, sqlalchemy
+from flask import session, redirect, url_for, render_template
 
 db_connection = "mysql+pymysql"
 db_user = "root"
@@ -7,7 +7,7 @@ db_pass = ""
 db_host = "localhost:3306"
 db_name = "harley_davidson"
 
-
+error = "U WRONG CUZ"
 # added SSL Connection
 engine = create_engine(
     db_connection + "://" + db_user + ":" + db_pass + "@" + db_host + "/" + db_name,
@@ -104,3 +104,23 @@ def select_one_user(id):
         output = None if len(rows) == 0 else dict(rows._mapping)
 
         return output
+
+
+def login_user(data):
+
+    with engine.connect() as conn:
+
+        query = text("SELECT * FROM users WHERE username = :username_params")
+
+        my_dict = dict(username_params=data["username"])
+        result = conn.execute(query, my_dict)
+
+        rows = result.fetchone()
+        print(rows[1])
+        if data["username"] == rows[2] and data["password"] == rows[1]:
+            print("nisud siya dre ugh")
+            session["username"] = rows[2]
+            return True
+        else:
+            print("creamepie")
+            return False
