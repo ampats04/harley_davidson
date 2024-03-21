@@ -116,11 +116,12 @@ def login_user(data):
         result = conn.execute(query, my_dict)
 
         rows = result.fetchone()
-        print(rows[1])
-        if data["username"] == rows[2] and data["password"] == rows[1]:
-            print("nisud siya dre ugh")
-            session["username"] = rows[2]
-            return True
-        else:
-            print("creamepie")
-            return False
+
+        if rows is not None:
+            if data["username"] == rows[2] and data["password"] == rows[1]:
+                print("nisud siya dre ugh")
+                session["username"] = rows[2]
+                return True
+            else:
+                print("creamepie")
+                return False

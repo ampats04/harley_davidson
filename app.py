@@ -48,8 +48,6 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
-    print("data ni ha")
-
     if request.method == "POST":
         data = request.form
         if login_user(data):
