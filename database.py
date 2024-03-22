@@ -123,5 +123,36 @@ def login_user(data):
                 session["username"] = rows[2]
                 return True
             else:
-                print("creamepie")
+
                 return False
+
+
+def register_user(data):
+
+    with engine.connect() as conn:
+
+        query = text(
+            "INSERT INTO users (username, password) VALUES (:username_params, :password_params)"
+        )
+        same_query = text("SELECT * FROM users WHERE username = :username")
+
+        same = dict(username=data["username"])
+
+        result = conn.execute(same_query, same)
+        error = "Username already existed"
+
+        rows = result.fetchone()
+        print(rows)
+        print(data["username"])
+        if rows[2] == data["username"]:
+            print("nisud siya sa if  my nigga")
+            return True
+
+        else:
+            print("nisud siya sa else my nigga")
+            my_dict = dict(
+                username_params=data["username"], password_params=data["password"]
+            )
+            conn.execute(query, my_dict)
+
+        conn.commit()

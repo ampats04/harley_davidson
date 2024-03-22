@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Registration
+        </title>
+        {% include 'bootstrap.html' %}
+    </head>
+    <body>
+        {% if error%}
+            <h1>{{error}}</h1>
+        {% endif %}
+        <form action = "/register" method = "post">
+            <label for = "username">Username: </label>
+            <input type = "username" name = "username" placeholder="Username">
+            <label for = "password">password</label>
+            <input type = "password" name = "password" placeholder="Password">
+            <input type = "submit" value = "login">
+        </form>
+    </body>
+</html>

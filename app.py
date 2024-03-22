@@ -15,6 +15,7 @@ from database import (
     select_user_info,
     select_one_user,
     login_user,
+    register_user,
 )
 
 
@@ -84,8 +85,10 @@ def buy_mc(id):
     # use {{args}} when getting data while use form when you want the data to be in the URL
     data = request.form
     motorcycle = load_motorcycle_from_db(id)
+    if request.method == "POST":
+        upload_info_to_db(id, data)
 
-    upload_info_to_db(id, data)
+        redirect(url_for("index"))
 
     return render_template("submitted.html", buy=data, motorcycle=motorcycle)
 
@@ -108,6 +111,26 @@ def one_user(id):
 
     print(one_us)
     return jsonify(one_us)
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    data = request.form
+    if request.method == "POST":
+        if register_user(data):
+
+            return render_template("register.html", error="Username already existed!")
+
+        else:
+            return redirect(url_for("login"))
+
+    return render_template("register.html")
+
+
+@app.route("/logout")
+def logout():
+    session.pop("username", None)
+    return redirect(url_for("login"))
 
 
 if __name__ == "__main__":
