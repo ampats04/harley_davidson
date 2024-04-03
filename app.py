@@ -1,3 +1,4 @@
+from functools import wraps
 from flask import (
     Flask,
     redirect,
@@ -8,6 +9,7 @@ from flask import (
     session,
     url_for,
 )
+import jwt
 from database import (
     load_motorcycles_from_db,
     load_motorcycle_from_db,
@@ -17,15 +19,32 @@ from database import (
     login_user,
     register_user,
 )
+from uuid import uuid4
+from datetime import *
 
 
 # assign the Flask app to a variable called 'app
 app = Flask(__name__)
 
 company = "Harley Davidson"
-app.config["SECRET_KEY"] = "5f9ed28397dc4c53900826d292b53c65"
+app.config["SECRET_KEY"] = uuid4().hex
+
 
 # function decorator
+def authenticated(func):
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        token = request.args.get("token")
+        if not token:
+            response = {"message": "Not Authenticated"}
+            return jsonify(response)
+        try:
+            data = jwt.decode(token, app.config["SECRET_KEY"])
+        except:
+            return jsonify({"message": "No Tokens"})
+        return func(*args, **kwargs)
+
+    return wrapped()
 
 
 # Initial Route
@@ -52,12 +71,22 @@ def login():
     if request.method == "POST":
         data = request.form
         if login_user(data):
-            return redirect(url_for("index"))
-        else:
-            error = "Invalid username or password"
-            return render_template("login.html", error=error)
+            session["logged_in"] = True
+            expiry = datetime.now(timezone.utc) + timedelta(seconds=60)
+            token = jwt.encode(
+                {"user": data["username"], "exp": expiry}, app.config["SECRET_KEY"]
+            )
 
-    return render_template("login.html")
+            decoded_token = jwt.decode(
+                token, app.config["SECRET_KEY"], algorithms=["HS256"]
+            )
+            return jsonify({"token": decoded_token})
+        else:
+            error = "Invalid token ss"
+            # return render_template("login.html", error=error)
+            return jsonify(error)
+
+    # return render_template("login.html")
 
 
 # GET motorcycle

@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, text
-from flask import session, redirect, url_for, render_template
+from flask import session, redirect, url_for, render_template, request
 
 db_connection = "mysql+pymysql"
 db_user = "root"
@@ -112,7 +112,7 @@ def login_user(data):
 
         query = text("SELECT * FROM users WHERE username = :username_params")
 
-        my_dict = dict(username_params=data["username"])
+        my_dict = dict(username_params=data.get("username"))
         result = conn.execute(query, my_dict)
 
         rows = result.fetchone()
@@ -139,7 +139,6 @@ def register_user(data):
         same = dict(username=data["username"])
 
         result = conn.execute(same_query, same)
-        error = "Username already existed"
 
         rows = result.fetchone()
         print(rows)
